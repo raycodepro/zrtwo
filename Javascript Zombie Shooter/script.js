@@ -180,6 +180,7 @@ let GameArea = {
 }
 
 
+
 //Create Game Components
 function Component(width, height, source, x, y, type, angle=0){
     this.type = type;
