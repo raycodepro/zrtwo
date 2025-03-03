@@ -31,7 +31,7 @@ let grassArray = [];
 let moveForward;
 let moveBackwards;
 let angle;
-let movementSpeed = 0.5;
+let movementSpeed = 1.5;
 
 
 //Zombie Variables
