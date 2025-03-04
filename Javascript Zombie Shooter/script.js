@@ -33,7 +33,6 @@ let moveBackwards;
 let angle;
 let movementSpeed = 1.5;
 
-
 //Zombie Variables
 let zombiesWaitTime = [];
 let zombiesAnimationPosition = [];
@@ -178,7 +177,6 @@ let GameArea = {
         this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
     }
 }
-
 
 
 //Create Game Components
@@ -510,12 +508,12 @@ function updateGameArea(){
         if(zombiesPlayerCollision[i])
         {
             zombies[i].angle = Math.atan2(zombies[i].y - player.y, zombies[i].x - player.x) + Math.PI;
-            zombies[i].x -= movementSpeed*5 * Math.cos(Math.atan2(zombies[i].y - player.y, zombies[i].x - player.x));
-            zombies[i].y -= movementSpeed*5 * Math.sin(Math.atan2(zombies[i].y - player.y, zombies[i].x - player.x));
+            zombies[i].x -= movementSpeed*.9 * Math.cos(Math.atan2(zombies[i].y - player.y, zombies[i].x - player.x));
+            zombies[i].y -= movementSpeed*.9 * Math.sin(Math.atan2(zombies[i].y - player.y, zombies[i].x - player.x));
             zombieMovementAnimationFunction(i);
         }
     }
-
+//movementSpeed*5 * for super fast
 
     //Update Game Objects
     grass1.update();
