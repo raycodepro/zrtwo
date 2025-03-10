@@ -179,6 +179,8 @@ let GameArea = {
 }
 
 
+
+
 //Create Game Components
 function Component(width, height, source, x, y, type, angle=0){
     this.type = type;
@@ -321,24 +323,6 @@ function Component(width, height, source, x, y, type, angle=0){
                 }
 
 
-                //Move player
-                this.x += movementSpeed * Math.cos(player.angle);
-                this.y += movementSpeed * Math.sin(player.angle);
-
-
-                //Move other game objects when moving player
-                bullet1.x += movementSpeed * Math.cos(bulletAngle);
-                bullet1.y += movementSpeed * Math.sin(bulletAngle);
-
-
-                bullet2.x += movementSpeed * Math.cos(bulletAngle);
-                bullet2.y += movementSpeed * Math.sin(bulletAngle);
-
-
-                bullet3.x += movementSpeed * Math.cos(bulletAngle);
-                bullet3.y += movementSpeed * Math.sin(bulletAngle);
-
-
                 for(let i = 0; i<zombies.length; i++)
                 {
                     zombies[i].x += movementSpeed * Math.cos(player.angle);
@@ -416,16 +400,16 @@ function updateGameArea(){
         let bullet3Turn = ((Math.random()-1)*3) * Math.PI/180;
 
 
-        bullet1.x += bulletSpeed * Math.cos(bulletAngle+bullet1Turn);
-        bullet1.y += bulletSpeed * Math.sin(bulletAngle+bullet1Turn);
+        bullet1.x += bulletSpeed*.45 * Math.cos(bulletAngle+bullet1Turn);
+        bullet1.y += bulletSpeed*.45 * Math.sin(bulletAngle+bullet1Turn);
 
 
-        bullet2.x += bulletSpeed * Math.cos(bulletAngle+bullet2Turn);
-        bullet2.y += bulletSpeed * Math.sin(bulletAngle+bullet2Turn);
+        bullet2.x += bulletSpeed*.5 * Math.cos(bulletAngle+bullet2Turn);
+        bullet2.y += bulletSpeed*.5 * Math.sin(bulletAngle+bullet2Turn);
 
 
-        bullet3.x += bulletSpeed * Math.cos(bulletAngle+bullet3Turn);
-        bullet3.y += bulletSpeed * Math.sin(bulletAngle+bullet3Turn);
+        bullet3.x += bulletSpeed*.45 * Math.cos(bulletAngle+bullet3Turn);
+        bullet3.y += bulletSpeed*.45 * Math.sin(bulletAngle+bullet3Turn);
 
 
         //Reload
@@ -447,6 +431,45 @@ function updateGameArea(){
         }
     }
 
+    //if(movementUpdate){
+    //this.x -= movementSpeed*10 * Math.cos(player.angle) + score;
+               // this.y -= movementSpeed*10 * Math.sin(player.angle) + score;
+    //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Kill Zombies
     for(let j = 0; j<bullets.length; j++)
@@ -465,11 +488,48 @@ function updateGameArea(){
 
                     score+=1;
                     bullets[j].x = 9999;
-                    bullets[j].y = 9999;
+                    bullets[j].y = 9999; //9999
                 }
             }
         }
     }
+//let player(movementSpeed) += score;
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //Collision detection
