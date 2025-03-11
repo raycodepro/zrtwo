@@ -45,8 +45,7 @@ let grassArray = [];
 
 
 //Player Movement Variables
-let moveForward;
-let moveBackwards;
+let moveForward, moveBackwards, moveLeft, moveRight;
 let angle;
 let movementSpeed = 1.5;
 
@@ -251,6 +250,60 @@ function Component(width, height, source, x, y, type, angle=0){
         ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
         ctx.rotate(this.angle);
 
+        let movePlayer= (x, y) => {
+                let xAmount = x * movementSpeed;
+                let yAmount = y * movementSpeed;
+
+                //Move player
+                this.x -= xAmount;
+                this.y -= yAmount;
+
+
+                //Move other game objects when moving player
+                bullet1.x -= xAmount;
+                bullet1.y -= yAmount;
+
+
+                // bullet2.x -= movementSpeed * Math.cos(bulletAngle);
+                // bullet2.y -= movementSpeed * Math.sin(bulletAngle);
+
+
+                // bullet3.x -= movementSpeed * Math.cos(bulletAngle);
+                // bullet3.y -= movementSpeed * Math.sin(bulletAngle);
+
+
+                for(let i = 0; i<zombies.length; i++)
+                {
+                    zombies[i].x -= xAmount;
+                    zombies[i].y -= yAmount;
+                }
+
+
+                //Infinite grass
+                if(grassArray[4].x+currentMaxX>currentMaxX)
+                {
+                    moveGrassLeft();
+                    currentMaxX+=1280;
+                }
+                else if(grassArray[4].x+currentMinX < currentMinX)
+                {
+                    moveGrassRight();
+                    currentMinX-=1280;
+                }
+
+
+                if(grassArray[4].y+currentMaxY > currentMaxY)
+                {
+                    moveGrassDown();
+                    currentMaxY+=720;
+                }
+                else if(grassArray[4].y+currentMinY < currentMinY)
+                {
+                    moveGrassUp();
+                    currentMinY-=720;
+                }
+        }
+
 
         //Images and Animated Images
         if(type === "image")
@@ -277,55 +330,8 @@ function Component(width, height, source, x, y, type, angle=0){
                     playerMovementAnimationFunction()
                 }
 
+                movePlayer(0,-1);
 
-                //Move player
-                this.x -= movementSpeed*10 * Math.cos(player.angle);
-                this.y -= movementSpeed*10 * Math.sin(player.angle);
-
-
-                //Move other game objects when moving player
-                bullet1.x -= movementSpeed * Math.cos(bulletAngle);
-                bullet1.y -= movementSpeed * Math.sin(bulletAngle);
-
-
-                bullet2.x -= movementSpeed * Math.cos(bulletAngle);
-                bullet2.y -= movementSpeed * Math.sin(bulletAngle);
-
-
-                bullet3.x -= movementSpeed * Math.cos(bulletAngle);
-                bullet3.y -= movementSpeed * Math.sin(bulletAngle);
-
-
-                for(let i = 0; i<zombies.length; i++)
-                {
-                    zombies[i].x -= movementSpeed * Math.cos(player.angle);
-                    zombies[i].y -= movementSpeed * Math.sin(player.angle);
-                }
-
-
-                //Infinite grass
-                if(grassArray[4].x+currentMaxX>currentMaxX)
-                {
-                    moveLeft();
-                    currentMaxX+=1280;
-                }
-                else if(grassArray[4].x+currentMinX < currentMinX)
-                {
-                    moveRight();
-                    currentMinX-=1280;
-                }
-
-
-                if(grassArray[4].y+currentMaxY > currentMaxY)
-                {
-                    moveDown();
-                    currentMaxY+=720;
-                }
-                else if(grassArray[4].y+currentMinY < currentMinY)
-                {
-                    moveUp();
-                    currentMinY-=720;
-                }
             }
             else if(moveBackwards){
 
@@ -339,37 +345,12 @@ function Component(width, height, source, x, y, type, angle=0){
                     playerMovementAnimationFunction()
                 }
 
-
-                for(let i = 0; i<zombies.length; i++)
-                {
-                    zombies[i].x += movementSpeed * Math.cos(player.angle);
-                    zombies[i].y += movementSpeed * Math.sin(player.angle);
-                }
-
-
-                //Infinite grass
-                if(grassArray[4].x+currentMaxX>currentMaxX)
-                {
-                    moveLeft();
-                    currentMaxX+=1280;
-                }
-                else if(grassArray[4].x+currentMinX < currentMinX)
-                {
-                    moveRight();
-                    currentMinX-=1280;
-                }
-
-
-                if(grassArray[4].y+currentMaxY > currentMaxY)
-                {
-                    moveDown();
-                    currentMaxY+=720;
-                }
-                else if(grassArray[4].y+currentMinY < currentMinY)
-                {
-                    moveUp();
-                    currentMinY-=720;
-                }
+                movePlayer(0,1);
+            }
+            else if(moveLeft){
+                movePlayer(-1,0);
+            } else if (moveRight){
+                movePlayer(1,0);
             }
             else{
                 //Shoot animation & Idle Animation
@@ -563,12 +544,10 @@ function endGame(){
 //Enable Movement Input
 function handleMovementPress(event) {
     let key = event.keyCode;
-    if (key === 87) {
-        moveForward = true;
-    }
-    else if (key === 83) {
-        moveBackwards = true;
-    }
+    moveForward = key === 87;
+    moveBackwards = key === 83;
+    moveLeft = key === 65;
+    moveRight = key === 68;
 
 
     if (key === 82){
@@ -593,7 +572,7 @@ function handleMovementRelease(event) {
 
 
 //Move Grass to the left
-function moveLeft()
+function moveGrassLeft()
 {
     grassArray[2].x -= 1280*3;
     grassArray[5].x -= 1280*3;
@@ -603,7 +582,7 @@ function moveLeft()
 
 
 //Move Grass to the right
-function moveRight()
+function moveGrassRight()
 {
     grassArray[0].x += 1280*3;
     grassArray[3].x += 1280*3;
@@ -613,7 +592,7 @@ function moveRight()
 
 
 //Move Grass up
-function moveUp()
+function moveGrassUp()
 {
     grassArray[6].y += 720*3;
     grassArray[7].y += 720*3;
@@ -623,7 +602,7 @@ function moveUp()
 
 
 //Move Grass to the down
-function moveDown()
+function moveGrassDown()
 {
     grassArray[0].y -= 720*3;
     grassArray[1].y -= 720*3;
