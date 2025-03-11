@@ -1,6 +1,23 @@
 "use strict";
 
 
+//fix bullets staying on the screen, make a time they disappear. fix player not being able to shoot while other bullets are on the screen, could be problem with bullets only
+//shooting bullets only after others disappear from screen, not allowing more than 1 set at a time.
+//fixes: zombies have health (maybe bars), bullet speed, damage, player health increase + regeneration, move speed + particle effects for all (much later). maybe html upgrade
+//bar with + buttons and display as a zombsroyale superpowers upgrade bar. 4 direction movement implemented + gun and player color and lighting changes throughout corresponding
+//upgrades, type of gun changes with each damage upgrade, player glows more with each health upgrade. add zombsroyale default skin eventually + add splash dmg weapons (maybe)
+
+
+
+
+ //if(movementUpdate){
+    //this.x -= movementSpeed*10 * Math.cos(player.angle) + score;
+               // this.y -= movementSpeed*10 * Math.sin(player.angle) + score;
+    //}
+
+    //let player(movementSpeed) += score;
+
+
 //Variables
 
 
@@ -127,8 +144,8 @@ function startGame()
     grass7 = new Component(1280,720,"images/grass.png",-1280,-720,"grass");
     grass8 = new Component(1280,720,"images/grass.png",0,-720,"grass");
     grass9 = new Component(1280,720,"images/grass.png",1280,-720,"grass");
-    bullet1 = new Component(10,2,"images/bullet.png",-10,-2,"image");
-    bullet2 = new Component(10,2,"images/bullet.png",-10,-2,"image");
+    bullet1 = new Component(10,2,"images/bullet.png",-10,-2,"image"); 
+    bullet2 = new Component(30,7,"images/bullet.png",-30,-7,"image");   //10,2 -10,-2 for normal (middle) bullet size
     bullet3 = new Component(10,2,"images/bullet.png",-10,-2,"image");
     crosshair = new Component(40,40,"images/crosshair097.png",640,360,"image");
     restartScreen = new Component(1280,720,"images/Game Over.png", 0,0,"image");
@@ -431,46 +448,7 @@ function updateGameArea(){
         }
     }
 
-    //if(movementUpdate){
-    //this.x -= movementSpeed*10 * Math.cos(player.angle) + score;
-               // this.y -= movementSpeed*10 * Math.sin(player.angle) + score;
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
     //Kill Zombies
     for(let j = 0; j<bullets.length; j++)
     {
@@ -493,41 +471,6 @@ function updateGameArea(){
             }
         }
     }
-//let player(movementSpeed) += score;
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
