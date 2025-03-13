@@ -12,7 +12,7 @@
 
  //if(movementUpdate){
     //this.x -= movementSpeed*10 * Math.cos(player.angle) + score;
-               // this.y -= movementSpeed*10 * Math.sin(player.angle) + score;
+    // this.y -= movementSpeed*10 * Math.sin(player.angle) + score;
     //}
 
     //let player(movementSpeed) += score;
@@ -162,6 +162,8 @@ function startGame()
     //Get Input
     window.addEventListener("keydown", handleMovementPress);
     window.addEventListener("keyup", handleMovementRelease);
+   // window.addEventListener("keyright", handleMovementRelease);
+   // window.addEventListener("keyleft", handleMovementRelease);
     window.addEventListener("mousedown", Shoot);
 
 
@@ -262,6 +264,10 @@ function Component(width, height, source, x, y, type, angle=0){
                 //Move other game objects when moving player
                 bullet1.x -= xAmount;
                 bullet1.y -= yAmount;
+
+               
+
+        
 
 
                 // bullet2.x -= movementSpeed * Math.cos(bulletAngle);
@@ -386,8 +392,9 @@ function updateGameArea(){
 
 
         //Set crosshair's position
-        crosshair.x = e.clientX-rect.left-20;
-        crosshair.y = e.clientY-rect.top-17;
+        crosshair.x = e.clientX-rect.left-28;
+        crosshair.y = e.clientY-rect.top-25;
+        //left-20 top-17
     };
 
 
@@ -408,6 +415,15 @@ function updateGameArea(){
 
         bullet3.x += bulletSpeed*.45 * Math.cos(bulletAngle+bullet3Turn);
         bullet3.y += bulletSpeed*.45 * Math.sin(bulletAngle+bullet3Turn);
+
+
+
+
+
+
+
+
+        //reload is not a set time variable, only until bullets are off the screen
 
 
         //Reload
@@ -544,11 +560,15 @@ function endGame(){
 //Enable Movement Input
 function handleMovementPress(event) {
     let key = event.keyCode;
-    moveForward = key === 87;
-    moveBackwards = key === 83;
-    moveLeft = key === 65;
-    moveRight = key === 68;
-
+    if (key === 87){
+        moveForward = true;
+    } else if (key === 83){
+        moveBackwards = true;
+    } else if (key === 65){
+        moveLeft = true;
+    } else if (key === 68){
+        moveRight = true;
+    }
 
     if (key === 82){
         if(gameOver)
@@ -562,11 +582,14 @@ function handleMovementPress(event) {
 //Disable Movement Input
 function handleMovementRelease(event) {
     let key = event.keyCode;
-    if (key === 87) {
+    if (key === 87){
         moveForward = false;
-    }
-    else if (key === 83) {
+    } else if (key === 83){
         moveBackwards = false;
+    } else if (key === 65){
+        moveLeft = false;
+    } else if (key === 68){
+        moveRight = false;
     }
 }
 
