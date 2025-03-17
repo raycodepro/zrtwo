@@ -86,7 +86,6 @@ let playerSprite = "images/Top_Down_Survivor/Top_Down_Survivor/shotgun/idle/surv
 let zombieSprite = "images/tds_zombie/export/Movement/skeleton-move_0.png";
 let imagesScale = 0.4;
 
-
 let playerMovementAnimation = [];
 for(let i = 0; i<20;i++)
 {
@@ -212,6 +211,7 @@ function Component(width, height, source, x, y, type, angle=0){
     else if (type === "player") {
         this.image = new Image();
         this.image.src = playerSprite;
+        //this.image.style.border = '4px red solid';
     }
     this.width = width;
     this.height = height;
@@ -324,7 +324,7 @@ function Component(width, height, source, x, y, type, angle=0){
         else if(type === "grass")
         {
             ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
-
+            
 
             if(moveForward){
                 // Movement & Idle animation
@@ -353,12 +353,12 @@ function Component(width, height, source, x, y, type, angle=0){
 
                 movePlayer(0,1);
             }
-            else if(moveLeft){
+            if(moveLeft){
                 movePlayer(-1,0);
             } else if (moveRight){
                 movePlayer(1,0);
             }
-            else{
+            if (!(moveForward || moveBackwards || moveLeft || moveRight)){
                 //Shoot animation & Idle Animation
                 if(shootAnimationOver)
                 {
@@ -376,7 +376,7 @@ function Component(width, height, source, x, y, type, angle=0){
 
 function updateGameArea(){
     GameArea.clear();
-
+    
 
     //Game context
     let ctx = GameArea.context;
@@ -460,7 +460,7 @@ function updateGameArea(){
                     zombiesAnimationPosition.splice(i,1);
                     zombiesPlayerCollision.splice(i,1);
 
-
+                        
                     score+=1;
                     bullets[j].x = 9999;
                     bullets[j].y = 9999; //9999
@@ -501,7 +501,7 @@ function updateGameArea(){
         }
     }
 
-
+ 
     //Move Zombies
     for(let i = 0; i<zombies.length; i++)
     {
@@ -530,7 +530,7 @@ function updateGameArea(){
     bullet2.update();
     bullet3.update();
     crosshair.update();
-
+    
 
     for(let i = 0; i<zombies.length; i++)
     {
@@ -659,6 +659,7 @@ function Shoot(event)
 
             bulletAngle = player.angle;
             canShoot = false;
+//normal canshoot for bullet angle = false ^
         }
     }
 }
