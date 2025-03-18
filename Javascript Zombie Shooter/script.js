@@ -22,10 +22,11 @@
 
 
 //Game Objects
-let player;
 let bullet1;
 let bullet2;
 let bullet3;
+let bulletLifespan = 0;
+let player;
 let crosshair;
 let grass1;
 let grass2;
@@ -132,6 +133,9 @@ function startGame()
 
 
     //Initialize Game Objects
+    bullet1 = new Component(10,2,"images/bullet.png",-10,-2,"image"); 
+    bullet2 = new Component(30,7,"images/bullet.png",-30,-7,"image");   //10,2 -10,-2 for normal (middle) bullet size
+    bullet3 = new Component(10,2,"images/bullet.png",-10,-2,"image");
     player = new Component(313*imagesScale,207*imagesScale,playerSprite,640-(313*imagesScale)/2,360-(202*imagesScale)/2,"player",0);
     grass1 = new Component(1280,720,"images/grass.png",-1280,720,"grass");
     grass2 = new Component(1280,720,"images/grass.png",0,720,"grass");
@@ -142,9 +146,6 @@ function startGame()
     grass7 = new Component(1280,720,"images/grass.png",-1280,-720,"grass");
     grass8 = new Component(1280,720,"images/grass.png",0,-720,"grass");
     grass9 = new Component(1280,720,"images/grass.png",1280,-720,"grass");
-    bullet1 = new Component(10,2,"images/bullet.png",-10,-2,"image"); 
-    bullet2 = new Component(30,7,"images/bullet.png",-30,-7,"image");   //10,2 -10,-2 for normal (middle) bullet size
-    bullet3 = new Component(10,2,"images/bullet.png",-10,-2,"image");
     crosshair = new Component(40,40,"images/crosshair097.png",640,360,"image");
     restartScreen = new Component(1280,720,"images/Game Over.png", 0,0,"image");
     bullets = [bullet1,bullet2,bullet3];
@@ -225,7 +226,6 @@ function Component(width, height, source, x, y, type, angle=0){
 
     this.update = function(){
 
-
         let ctx = GameArea.context;
 
 
@@ -261,9 +261,13 @@ function Component(width, height, source, x, y, type, angle=0){
                 this.y -= yAmount;
 
 
-                //Move other game objects when moving player
+                //Move other game objects when moving player NOT ANYMORE
                 bullet1.x -= xAmount;
                 bullet1.y -= yAmount;
+                bullet2.x -= xAmount;
+                bullet2.y -= yAmount;
+                bullet3.x -= xAmount;
+                bullet3.y -= yAmount;
 
                
 
@@ -375,10 +379,14 @@ function Component(width, height, source, x, y, type, angle=0){
 
 
 function updateGameArea(){
+    if (bulletLifespan > 0){
+        bulletLifespan -= 1;
+        console.log("reducing bullet life " + bulletLifespan)
+    }
     GameArea.clear();
     
 
-    //Game context
+    //Game l
     let ctx = GameArea.context;
     ctx.fillText(score.toString(), 640, 60);
 
@@ -427,25 +435,60 @@ function updateGameArea(){
 
 
         //Reload
-        if(bullet1.x > 1280)
-        {
+        console.log("check bullet")
+        if (bulletLifespan <= 0){
             canShoot = true;
+            // bulletActive = false;
         }
-        else if(bullet1.x < 0)
-        {
-            canShoot = true;
-        }
-        else if(bullet1.y < 0)
-        {
-            canShoot = true;
-        }
-        else if(bullet1.y > 720)
-        {
-            canShoot = true;
-        }
-    }
+        // if(bullet1.x > 1280)
+        // {
+        //     canShoot = true;
+        // }
+        // else if(bullet1.x < 0)
+        // {
+        //     canShoot = true;
+        // }
+        // else if(bullet1.y < 0)
+        // {
+        //     canShoot = true;
+        // }
+        // else if(bullet1.y > 720)
+        // {
+        //     canShoot = true;
+        // }
 
+        //use bullet active ^ false after an interval
+        
+        //if(bullets)
+          //  {
+          //      sec = 10
+          //      canShoot = true;
+          //  }
+          //  else if(bullets)
+           // {
+            //     0< sec < 10
+            //    canShoot = false;
+           // }
+           // else(bullets)
+           // {
+           //     canShoot = true;
+           // }
+           //lifetime, delete by 1 every frame
+           
+    }
+//setInterval(sec);
   
+
+
+
+
+
+
+
+
+
+
+
     //Kill Zombies
     for(let j = 0; j<bullets.length; j++)
     {
@@ -538,11 +581,24 @@ function updateGameArea(){
     }
 
 
+
+
+
+
+
     if(gameOver)
     {
         restartScreen.update();
         ctx.fillText("High Score: " + highscore.toString(), 640, 650);
+        //sec.update();
     }
+
+
+
+
+
+
+
 
 
 }
@@ -640,6 +696,8 @@ function Shoot(event)
     {
         if(canShoot && !gameOver)
         {
+            bulletLifespan = 100;
+
             shootAnimationOver = false;
             bulletActive = true;
             bullet1.x = 640;
