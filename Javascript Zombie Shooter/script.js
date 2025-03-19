@@ -26,6 +26,13 @@ let bullet1;
 let bullet2;
 let bullet3;
 let bulletLifespan = 0;
+
+
+
+let hits = 0;
+
+
+
 let player;
 let crosshair;
 let grass1;
@@ -413,16 +420,16 @@ function updateGameArea(){
         let bullet3Turn = ((Math.random()-1)*3) * Math.PI/180;
 
 
-        bullet1.x += bulletSpeed*.45 * Math.cos(bulletAngle+bullet1Turn);
-        bullet1.y += bulletSpeed*.45 * Math.sin(bulletAngle+bullet1Turn);
+        bullet1.x += bulletSpeed*1 * Math.cos(bulletAngle+bullet1Turn);
+        bullet1.y += bulletSpeed*1 * Math.sin(bulletAngle+bullet1Turn);
+//.45
 
+        bullet2.x += bulletSpeed*1 * Math.cos(bulletAngle+bullet2Turn);
+        bullet2.y += bulletSpeed*1 * Math.sin(bulletAngle+bullet2Turn);
+//.5
 
-        bullet2.x += bulletSpeed*.5 * Math.cos(bulletAngle+bullet2Turn);
-        bullet2.y += bulletSpeed*.5 * Math.sin(bulletAngle+bullet2Turn);
-
-
-        bullet3.x += bulletSpeed*.45 * Math.cos(bulletAngle+bullet3Turn);
-        bullet3.y += bulletSpeed*.45 * Math.sin(bulletAngle+bullet3Turn);
+        bullet3.x += bulletSpeed*1 * Math.cos(bulletAngle+bullet3Turn);
+        bullet3.y += bulletSpeed*1 * Math.sin(bulletAngle+bullet3Turn);
 
 
 
@@ -440,43 +447,10 @@ function updateGameArea(){
             canShoot = true;
             // bulletActive = false;
         }
-        // if(bullet1.x > 1280)
-        // {
-        //     canShoot = true;
-        // }
-        // else if(bullet1.x < 0)
-        // {
-        //     canShoot = true;
-        // }
-        // else if(bullet1.y < 0)
-        // {
-        //     canShoot = true;
-        // }
-        // else if(bullet1.y > 720)
-        // {
-        //     canShoot = true;
-        // }
-
-        //use bullet active ^ false after an interval
-        
-        //if(bullets)
-          //  {
-          //      sec = 10
-          //      canShoot = true;
-          //  }
-          //  else if(bullets)
-           // {
-            //     0< sec < 10
-            //    canShoot = false;
-           // }
-           // else(bullets)
-           // {
-           //     canShoot = true;
-           // }
-           //lifetime, delete by 1 every frame
+    
            
     }
-//setInterval(sec);
+
   
 
 
@@ -496,17 +470,45 @@ function updateGameArea(){
         {
             if(bullets[j].x>zombies[i].x+27*imagesScale && bullets[j].x<zombies[i].x+(27+206)*imagesScale)
             {
+
                 if(bullets[j].y>zombies[i].y+77*imagesScale && bullets[j].y<zombies[i].y+(77+197)*imagesScale)
-                {
+                 {
                     zombies.splice(i,1);
-                    zombiesWaitTime.splice(i,1);
-                    zombiesAnimationPosition.splice(i,1);
-                    zombiesPlayerCollision.splice(i,1);
+                        zombiesWaitTime.splice(i,1);
+                        zombiesAnimationPosition.splice(i,1);
+                        zombiesPlayerCollision.splice(i,1);
+                        bullets[j].x = 9999;
+                         bullets[j].y = 9999;
+                        score+=1;
+                    //if(bullets[j].y>zombies[i].y+77*imagesScale && bullets[j].y<zombies[i].y+(77+197)*imagesScale)
+                    //{
+                    //moves bullets off the map instead of splicing
+                   // bullets[j].x = 9999;
+                   // bullets[j].y = 9999; //9999
+                   // hits += 1;
+                    //remove the bullet(s) that hit the zombie and add it back to the array without killing the zombie
+                    //this.bullets.pull;
+                    //this.bullets.push
+                    //bullets.splice(j,1);
+                    //idea^^
+                    
+                    //on zombie kill only
+                   // if(hits >= 2)
+                   // {
+                   //     bullets[j].x = 9999;
+                   //     bullets[j].y = 9999;
+                    
+                    
+                   //     zombies.splice(i,1);
+                   //     zombiesWaitTime.splice(i,1);
+                   //     zombiesAnimationPosition.splice(i,1);
+                   //     zombiesPlayerCollision.splice(i,1);
 
                         
-                    score+=1;
-                    bullets[j].x = 9999;
-                    bullets[j].y = 9999; //9999
+                    //    score+=1;
+                    
+                   // }
+
                 }
             }
         }
@@ -610,6 +612,22 @@ function endGame(){
     {
         highscore = score;
     }
+
+
+
+
+
+
+
+    hits = 0;
+
+
+
+
+
+
+
+
 }
 
 
