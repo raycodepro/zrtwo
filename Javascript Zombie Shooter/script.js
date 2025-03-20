@@ -260,8 +260,8 @@ function Component(width, height, source, x, y, type, angle=0){
         ctx.rotate(this.angle);
 
         let movePlayer= (x, y) => {
-                let xAmount = x * movementSpeed;
-                let yAmount = y * movementSpeed;
+                let xAmount = x * .3 * movementSpeed;
+                let yAmount = y * .3 * movementSpeed;
 
                 //Move player
                 this.x -= xAmount;
@@ -473,13 +473,16 @@ function updateGameArea(){
 
                 if(bullets[j].y>zombies[i].y+77*imagesScale && bullets[j].y<zombies[i].y+(77+197)*imagesScale)
                  {
+                    zombies[i].health -= 1;
+                    bullets[j].x = 9999;
+                    bullets[j].y = 9999;
+                    if (zombies[i].health >= 0)
+                        continue;
                     zombies.splice(i,1);
-                        zombiesWaitTime.splice(i,1);
-                        zombiesAnimationPosition.splice(i,1);
-                        zombiesPlayerCollision.splice(i,1);
-                        bullets[j].x = 9999;
-                         bullets[j].y = 9999;
-                        score+=1;
+                    zombiesWaitTime.splice(i,1);
+                    zombiesAnimationPosition.splice(i,1);
+                    zombiesPlayerCollision.splice(i,1);
+                    score+=1;
                     //if(bullets[j].y>zombies[i].y+77*imagesScale && bullets[j].y<zombies[i].y+(77+197)*imagesScale)
                     //{
                     //moves bullets off the map instead of splicing
@@ -714,7 +717,7 @@ function Shoot(event)
     {
         if(canShoot && !gameOver)
         {
-            bulletLifespan = 100;
+            bulletLifespan = 50;
 
             shootAnimationOver = false;
             bulletActive = true;
@@ -744,6 +747,8 @@ function Shoot(event)
 function spawnZombie()
 {
     let newZombie = new Component(288*imagesScale, 311*imagesScale, zombieSprite,640-(288*imagesScale)/2,360-(311*imagesScale)/2,"image");
+
+    newZombie.health = 10;
 
 
     let randomPosition = Math.floor(Math.random()*4)+1;
