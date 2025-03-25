@@ -75,3 +75,8 @@ footer{
     color: white;
     background-color: #F86624;
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
