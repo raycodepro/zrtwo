@@ -5,6 +5,7 @@
 // gradient.addColorStop(0.5, "darkblue")
 // gradient.addColorStop(1, "magenta")
 // ctx.fillStyle = gradient
+//make a math random for 4 different numbers to decide which power you gain on kill
 class Particle {
     constructor(effect) {
         this.effect = effect
