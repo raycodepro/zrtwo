@@ -1,11 +1,7 @@
 "use strict";
 
-// const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
-// gradient.addColorStop(0, "blue")
-// gradient.addColorStop(0.5, "darkblue")
-// gradient.addColorStop(1, "magenta")
-// ctx.fillStyle = gradient
 //make a math random for 4 different numbers to decide which power you gain on kill
+
 class Particle {
     constructor(effect) {
         this.effect = effect
@@ -20,9 +16,17 @@ class Particle {
         this.lifespan = Math.random() * 50
     }
     draw(context) {
-        context.beginPath()
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        context.fill()
+        context.save()
+        
+            const gradient = context.createLinearGradient(0, 0, 1280, 720)
+            gradient.addColorStop(0, "blue")
+            gradient.addColorStop(0.5, "darkblue")
+            gradient.addColorStop(1, "magenta")
+            context.fillStyle = gradient
+            context.beginPath()
+            context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+            context.fill()
+        context.restore()
         //context.stroke();
     }
 
@@ -75,7 +79,7 @@ class Effect {
         this.width = this.canvas.width
         this.height = this.canvas.height
         this.particles = []
-        this.numberOfParticles = 3 //300
+        this.numberOfParticles = 1 //300
         //this.createParticles();
 
         this.mouse = {
@@ -711,12 +715,13 @@ function updateGameArea() {
     grass7.update();
     grass8.update();
     grass9.update();
+    GameArea.particleEffect.handleParticles(ctx);
     player.update();
     bullet1.update();
     bullet2.update();
     bullet3.update();
     crosshair.update();
-    GameArea.particleEffect.handleParticles(ctx);
+    //GameArea.particleEffect.handleParticles(ctx);
 
     for (let i = 0; i < zombies.length; i++) {
         zombies[i].update();
