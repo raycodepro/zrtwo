@@ -1,13 +1,13 @@
 "use strict";
 
 //make a math random for 4 different numbers to decide which power you gain on kill
-
+//gradient has certain colors across screen, also offset from cursor
 class Particle {
     constructor(effect) {
         this.effect = effect
         this.radius = Math.floor(Math.random() * 10 + 1)
-        this.x = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.x
-        this.y = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.y
+        this.x = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.x //.mouse.x
+        this.y = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.y //.mouse.y
         this.vx = (Math.random() * 1 - 0.5)
         this.vy = (Math.random() * 1 - 0.5)
         this.pushX = 0
@@ -19,9 +19,9 @@ class Particle {
         context.save()
         
             const gradient = context.createLinearGradient(0, 0, 1280, 720)
-            gradient.addColorStop(0, "blue")
+            gradient.addColorStop(0, "cyan")
             gradient.addColorStop(0.5, "darkblue")
-            gradient.addColorStop(1, "magenta")
+            gradient.addColorStop(1, "purple")
             context.fillStyle = gradient
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
@@ -33,13 +33,13 @@ class Particle {
 
 
     update() {
-        if (this.effect.mouse.hover) {
+        if (this.effect.mouse.hover) { //mouse.hover
             //pressed
-            const dx = this.x - this.effect.mouse.x
-            const dy = this.y - this.effect.mouse.y
+            const dx = this.x - this.effect.mouse.x //mouse.x
+            const dy = this.y - this.effect.mouse.y //mouse.y
             const distance = Math.hypot(dx, dy)
-            const force = -Math.min(this.effect.mouse.radius / distance, 1)
-            if (distance < this.effect.mouse.radius) {
+            const force = -Math.min(this.effect.mouse.radius / distance, 1) //effect.mouse.radius
+            if (distance < this.effect.mouse.radius) { // same as above
                 const angle = Math.atan2(dy, dx)
                 this.pushX += Math.cos(angle) * force //push
                 this.pushY += Math.sin(angle) * force //push
@@ -82,31 +82,31 @@ class Effect {
         this.numberOfParticles = 1 //300
         //this.createParticles();
 
-        this.mouse = {
+        this.mouse = { //this.mouse
             x: 0,
             y: 0,
-            hover: false, //pressed, true
+            hover: false, //(hover: false) pressed, true
             radius: 200,
         }
 
         window.addEventListener("resize", (e) => {
             this.resize(e.target.window.innerWidth, e.target.window.innerHeight)
         })
-        window.addEventListener("mousemove", (e) => {
-            if (this.mouse.hover) {
+        window.addEventListener("mousemove", (e) => { //mousemove
+            if (this.mouse.hover) { //this.mouse.hover
                 //pressed
-                this.mouse.x = e.x
-                this.mouse.y = e.y
+                this.mouse.x = e.x //this.mouse.x
+                this.mouse.y = e.y //this.mouse.y
                 if (this.particles.length < 100) {
                     this.createParticles()
                 }
             }
         })
-        window.addEventListener("mousedown", (e) => {
+        window.addEventListener("mousedown", (e) => { //mousedown
             //this makes them repel
-            this.mouse.hover = true //pressed
-            this.mouse.x = e.x
-            this.mouse.y = e.y
+            this.mouse.hover = true //pressed //this.mouse.hover = true
+            this.mouse.x = e.x //this.mouse.x
+            this.mouse.y = e.y //this.mouse.y
         })
         //window.addEventListener('mouseup', e => {
         //this.mouse.hover = true;  //pressed = false
@@ -161,7 +161,7 @@ class Effect {
         const gradient = this.context.createLinearGradient(0, 0, width, height)
         gradient.addColorStop(0, "cyan") //white
         gradient.addColorStop(0.5, "blue") //gold
-        gradient.addColorStop(1, "magenta") //orangered
+        gradient.addColorStop(1, "purple") //orangered
         this.context.fillStyle = gradient
         //             this.context.strokeStyle = 'white';
         this.particles.forEach((particle) => {
@@ -632,6 +632,8 @@ function updateGameArea() {
                     zombiesAnimationPosition.splice(i, 1);
                     zombiesPlayerCollision.splice(i, 1);
                     score += 1;
+                    //if (score += 1)
+                      //  zombies[i].health -= 2
                     //if(bullets[j].y>zombies[i].y+77*imagesScale && bullets[j].y<zombies[i].y+(77+197)*imagesScale)
                     //{
                     //moves bullets off the map instead of splicing
