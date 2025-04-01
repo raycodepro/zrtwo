@@ -22,7 +22,7 @@ class Particle {
             gradient.addColorStop(0, "cyan")
             gradient.addColorStop(0.5, "darkblue")
             gradient.addColorStop(1, "purple")
-            context.fillStyle = gradient
+            context.fillStyle = gradient //gradient
             context.beginPath()
             context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
             context.fill()
@@ -162,7 +162,7 @@ class Effect {
         gradient.addColorStop(0, "cyan") //white
         gradient.addColorStop(0.5, "blue") //gold
         gradient.addColorStop(1, "purple") //orangered
-        this.context.fillStyle = gradient
+        this.context.fillStyle = gradient //gradient
         //             this.context.strokeStyle = 'white';
         this.particles.forEach((particle) => {
             particle.reset()
