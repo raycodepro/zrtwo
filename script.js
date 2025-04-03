@@ -1,4 +1,5 @@
 "use strict";
+let moveForward, moveBackwards, moveLeft, moveRight;
 
 //make a math random for 4 different numbers to decide which power you gain on kill
 //gradient has certain colors across screen, also offset from cursor
@@ -6,10 +7,23 @@ class Particle {
     constructor(effect) {
         this.effect = effect
         this.radius = Math.floor(Math.random() * 10 + 1)
-        this.x = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.x //.mouse.x
-        this.y = this.radius + Math.random() * this.radius / 2 + this.effect.mouse.y //.mouse.y
-        this.vx = (Math.random() * 1 - 0.5)
-        this.vy = (Math.random() * 1 - 0.5)
+        this.x = 800
+        this.y = 500
+        if (moveLeft){
+            this.vx = +10;
+        } else if (moveRight){
+            this.vx = -10;
+        } else {
+            this.vx = 0;
+        }
+        if (moveForward){
+            this.vy = +10;
+        } else if (moveBackwards){
+            this.vy = -10;
+        } else {
+            this.vy = 0;
+        }
+    
         this.pushX = 0
         this.pushY = 0
         this.friction = 0.5
@@ -33,36 +47,24 @@ class Particle {
 
 
     update() {
-        if (this.effect.mouse.hover) { //mouse.hover
-            //pressed
-            const dx = this.x - this.effect.mouse.x //mouse.x
-            const dy = this.y - this.effect.mouse.y //mouse.y
-            const distance = Math.hypot(dx, dy)
-            const force = -Math.min(this.effect.mouse.radius / distance, 1) //effect.mouse.radius
-            if (distance < this.effect.mouse.radius) { // same as above
-                const angle = Math.atan2(dy, dx)
-                this.pushX += Math.cos(angle) * force //push
-                this.pushY += Math.sin(angle) * force //push
-            }
-        }
 
-        this.x += (this.pushX *= this.friction) + this.vx //push
-        this.y += (this.pushY *= this.friction) + this.vy //push
+        this.x +=  this.vx //push
+        this.y +=  this.vy //push
 
-        if (this.x < this.radius) {
-            this.x = this.radius
-            this.vx *= -1
-        } else if (this.x > this.effect.width - this.radius) {
-            this.x = this.effect.width - this.radius
-            this.vx *= -1
-        }
-        if (this.y < this.radius) {
-            this.y = this.radius
-            this.vy *= -1
-        } else if (this.y > this.effect.height - this.radius) {
-            this.y = this.effect.height - this.radius
-            this.vy *= -1
-        }
+        // if (this.x < this.radius) {
+        //     this.x = this.radius
+        //     this.vx *= -1
+        // } else if (this.x > this.effect.width - this.radius) {
+        //     this.x = this.effect.width - this.radius
+        //     this.vx *= -1
+        // }
+        // if (this.y < this.radius) {
+        //     this.y = this.radius
+        //     this.vy *= -1
+        // } else if (this.y > this.effect.height - this.radius) {
+        //     this.y = this.effect.height - this.radius
+        //     this.vy *= -1
+        // }
         this.lifespan -= 1
     }
     reset() {
@@ -222,7 +224,6 @@ let grassArray = [];
 
 
 //Player Movement Variables
-let moveForward, moveBackwards, moveLeft, moveRight;
 let angle;
 let movementSpeed = 1.5;
 
