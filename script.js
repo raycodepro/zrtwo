@@ -84,21 +84,30 @@ class Effect {
         this.numberOfParticles = 1 //300
         //this.createParticles();
 
-        this.mouse = { //this.mouse
+        this.player= { //this.mouse
             x: 0,
             y: 0,
-            hover: false, //(hover: false) pressed, true
+            
+            
+            
+            movePlayer: false, //(hover: false)  not needed = pressed, true
             radius: 200,
+
+
+
+
+
+
         }
 
         window.addEventListener("resize", (e) => {
             this.resize(e.target.window.innerWidth, e.target.window.innerHeight)
         })
-        window.addEventListener("mousemove", (e) => { //mousemove
-            if (this.mouse.hover) { //this.mouse.hover
+        window.addEventListener("playermove", (e) => { //mousemove
+            if (this.movePlayer = true) { //this.mouse.hover, no = true included
                 //pressed
-                this.mouse.x = e.x //this.mouse.x
-                this.mouse.y = e.y //this.mouse.y
+                this.player.x = e.x //this.mouse.x
+                this.player.y = e.y //this.mouse.y
                 if (this.particles.length < 100) {
                     this.createParticles()
                 }
@@ -106,9 +115,23 @@ class Effect {
         })
         window.addEventListener("mousedown", (e) => { //mousedown
             //this makes them repel
-            this.mouse.hover = true //pressed //this.mouse.hover = true
-            this.mouse.x = e.x //this.mouse.x
-            this.mouse.y = e.y //this.mouse.y
+            //this.mouse.hover = true        //pressed //this.mouse.hover = true
+           // this.mouse.x = e.x          //this.mouse.x
+            //this.mouse.y = e.y         //this.mouse.y
+
+
+
+
+
+
+            this.player.x = e.x
+            this.player.y = e.y
+
+
+
+
+
+
         })
         //window.addEventListener('mouseup', e => {
         //this.mouse.hover = true;  //pressed = false
@@ -335,7 +358,12 @@ function startGame() {
     window.addEventListener("keyup", handleMovementRelease);
     // window.addEventListener("keyright", handleMovementRelease);
     // window.addEventListener("keyleft", handleMovementRelease);
-    window.addEventListener("mousedown", Shoot);
+
+
+
+
+
+    window.addEventListener("mousedown", Shoot); //mousedown, Shoot
 
 
 
@@ -524,6 +552,27 @@ function Component(width, height, source, x, y, type, angle = 0) {
                 movePlayer(1, 0);
             }
             if (!(moveForward || moveBackwards || moveLeft || moveRight)) {
+
+
+
+
+
+
+
+
+
+                createParticles();
+
+
+
+
+
+
+
+
+
+
+
                 //Shoot animation & Idle Animation
                 if (shootAnimationOver) {
                     playerIdleAnimationFunction();
@@ -553,7 +602,7 @@ function updateGameArea() {
 
 
     //On mouse moved:
-    onmousemove = function (e) {
+    onmousemove = function (e) { //onmousemove
         //Find players rotation
         let rect = GameArea.canvas.getBoundingClientRect();
         angle = Math.atan2(e.clientY - rect.top - player.y - 150 / 2, e.clientX - rect.left - player.x - 256 / 2);
