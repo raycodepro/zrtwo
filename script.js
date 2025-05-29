@@ -82,7 +82,7 @@ class Effect {
         this.height = this.canvas.height
         this.particles = []
         this.numberOfParticles = 1 //300
-        //this.createParticles();
+        this.createParticles();
 
         this.player= { //this.mouse
             x: 0,
