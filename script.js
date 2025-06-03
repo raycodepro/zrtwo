@@ -84,13 +84,13 @@ class Effect {
         this.numberOfParticles = 1 //300
         this.createParticles();
 
-        this.player= { //this.mouse
+        this.mouse= { //this.player
             x: 0,
             y: 0,
             
             
             
-            movePlayer: false, //(hover: false)  not needed = pressed, true
+           hover: false, //pressed: true, movePlayer: false
             radius: 200,
 
 
@@ -103,11 +103,11 @@ class Effect {
         window.addEventListener("resize", (e) => {
             this.resize(e.target.window.innerWidth, e.target.window.innerHeight)
         })
-        window.addEventListener("playermove", (e) => { //mousemove
-            if (this.movePlayer = true) { //this.mouse.hover, no = true included
+        window.addEventListener("mousemove", (e) => { //playermove
+            if (this.mouse.hover) { //this.movePlayer = true
                 //pressed
-                this.player.x = e.x //this.mouse.x
-                this.player.y = e.y //this.mouse.y
+                this.mouse.x = e.x //this.player.x
+                this.mouse.y = e.y //this.player.y
                 if (this.particles.length < 100) {
                     this.createParticles()
                 }
@@ -116,26 +116,24 @@ class Effect {
         window.addEventListener("mousedown", (e) => { //mousedown
             //this makes them repel
             //this.mouse.hover = true        //pressed //this.mouse.hover = true
-           // this.mouse.x = e.x          //this.mouse.x
-            //this.mouse.y = e.y         //this.mouse.y
-
-
-
-
-
-
-            this.player.x = e.x
-            this.player.y = e.y
-
-
-
-
-
-
+        // this.player.x = e.x
+        //this.player.y = e.y
+            this.mouse.x = e.x
+            this.mouse.y = e.y
         })
-        //window.addEventListener('mouseup', e => {
-        //this.mouse.hover = true;  //pressed = false
-        // });
+        
+        
+        
+        
+        
+       // window.addEventListener('mouseup', e => {
+       // this.mouse.hover = true;  //pressed = false
+      //   });
+
+
+
+
+
     }
     createParticles() {
         for (let i = 0; i < this.numberOfParticles; i++) {
@@ -561,7 +559,7 @@ function Component(width, height, source, x, y, type, angle = 0) {
 
 
 
-                createParticles();
+                //createParticles();
 
 
 
@@ -956,7 +954,7 @@ function spawnZombie() {
 
 
     zombies.push(newZombie);
-    zombiesWaitTime.push(5);
+    zombiesWaitTime.push(20);//5
     zombiesAnimationPosition.push(0);
     zombiesPlayerCollision.push(true);
 }
